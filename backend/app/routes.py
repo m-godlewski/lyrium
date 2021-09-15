@@ -14,7 +14,7 @@ def analyse():
     """
     """
     # retrieving artist name from request
-    artist_name = request.args.get("artist")
+    artist_name = request.args.get("artist_name")
 
     # calls method that makes artist lyrics analyse
     results_of_analyse = controller.lyrics_analyse_artist(artist_name = artist_name)

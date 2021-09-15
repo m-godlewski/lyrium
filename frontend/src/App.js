@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import IndexForm from './IndexForm';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         >
           Lyrium
         </a>
+        <IndexForm />
       </header>
     </div>
   );
