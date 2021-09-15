@@ -6,6 +6,9 @@ import config
 
 
 class Track:
+    """
+    Class representation of single music track.
+    """
 
     def __init__(self, title: str, lyrics: str) -> None:
         self.title = title
@@ -17,6 +20,9 @@ class Track:
 
 
 class Album:
+    """
+    Class representation of single music album.
+    """
 
     def __init__(self, title: str, cover_url: str, tracks: List[Track]) -> None:
         self.title = title
@@ -29,6 +35,9 @@ class Album:
 
 
 class Artist:
+    """
+    Class representation of single music artist.
+    """
 
     def __init__(self, name: str, image_url: str, albums: List[Album]) -> None:
         self.name = name
