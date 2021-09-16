@@ -2,8 +2,22 @@
 Script that contains methods responsible for business logic of application.
 """
 
+import logging
+import traceback
+
 from app.classes import Track, Album, Artist
 
 
 def lyrics_analyse_artist(artist_name: str) -> dict:
-    return {}
+    """
+    """
+    try:
+
+        # dictionary that stores analyse results
+        results = {}
+
+    except Exception:
+        logging.error(traceback.format_exc())
+        return {}
+    else:
+        return results

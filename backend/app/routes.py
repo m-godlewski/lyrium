@@ -17,8 +17,9 @@ def analyse():
     artist_name = request.args.get("artist_name")
 
     # calls method that makes artist lyrics analyse
-    results_of_analyse = controller.lyrics_analyse_artist(artist_name = artist_name)
+    results_of_analyse = controller.lyrics_analyse_artist(artist_name=artist_name)
 
+    # returns endpoint response
     return jsonify(
         {
             "artist_name": artist_name,
