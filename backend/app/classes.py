@@ -45,6 +45,28 @@ class Artist:
         self.image_url = image_url
         self.albums = albums
 
+    @classmethod
+    def load(cls, json_dict: dict):
+        """Creates instance of this class, base on JSON file content."""
+        # dictionary that stores creation parameters
+        parameters = {
+            "name": json_dict.get("name"),
+            "image_url": json_dict.get("image_url"),
+            "albums": []
+        }
+        # iteration over albums in JSON file and collecting Albums objects
+        for album in json_dict["albums"]:
+            # iteration over tracks in current album and collecting Tracks obejcts
+            tracks = []
+            for track in album["tracks"]:
+                tracks.append(Track(title=track.get("title"), lyrics=track.get("lyrics")))
+            # appending Album object to list
+            parameters["albums"].append(
+                Album(title=album.get("title"), cover_url=album.get("cover_url"), tracks=tracks)
+            )
+        # creates class instance base on collected parameters
+        return cls(**parameters)
+
     def save(self):
         """Saves instance of this class to JSON file."""
         with open(self.path, "w") as file:
