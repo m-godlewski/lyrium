@@ -41,6 +41,13 @@ class Artist:
     """
 
     def __init__(self, name: str, image_url: str, albums: List[Album]) -> None:
+        """Creates instance of Artist class.
+
+        Args:
+            name (str): name of artist.
+            image_url (str): URL adress to artist image.
+            albums (List[Album]): list of Album class objects.
+        """
         self.name = name
         self.path = os.path.join(config.DATA_DIR, self.get_filename(name=name))
         self.image_url = image_url
