@@ -42,7 +42,7 @@ class Artist:
 
     def __init__(self, name: str, image_url: str, albums: List[Album]) -> None:
         self.name = name
-        self.path = os.path.join(config.DATA_DIR, Artist.get_filename(name=name))
+        self.path = os.path.join(config.DATA_DIR, self.get_filename(name=name))
         self.image_url = image_url
         self.albums = albums
 
