@@ -16,6 +16,9 @@ def lyrics_analyse_artist(artist_name: str) -> dict:
         # dictionary that stores analyse results
         results = {}
 
+        # creates selected artist object
+        artist = Artist.load(name=artist_name)
+
     except Exception:
         logging.error(traceback.format_exc())
         return {}
