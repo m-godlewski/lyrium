@@ -33,7 +33,18 @@ class Track:
 
     @property
     def lyrics_processed(self) -> str:
-        """"""
+        """Returns processed track lyrics.
+
+        String is processed in four following steps.
+
+        - STEP I - lowercasing.
+        - STEP II - removing unnecessary part of string.
+        - STEP III - removing punctuation.
+        - STEP IV - removing whitespaces.
+
+        Returns:
+            str: Processed lyrics string.
+        """
         # STEP 0 - copies lyrics
         lyrics = copy.deepcopy(self.lyrics)
         # STEP I - makes string lowercased
@@ -81,6 +92,20 @@ class Album:
         """Returns list of tracks names."""
         return [track.title for track in self.tracks if track.title]
 
+    @property
+    def lyrics(self) -> str:
+        """Returns string that contains lyrics of each tracks in album."""
+        list_of_tracks_lyrics = [track.lyrics for track in self.tracks]
+        album_lyrics = " ".join(list_of_tracks_lyrics)
+        return album_lyrics
+
+    @property
+    def lyrics_processed(self) -> str:
+        """Returns string that contains processed lyrics of each tracks in album."""
+        list_of_tracks_lyrics = [track.lyrics_processed for track in self.tracks]
+        album_lyrics = " ".join(list_of_tracks_lyrics)
+        return album_lyrics
+
 
 class Artist:
     """
@@ -108,6 +133,20 @@ class Artist:
     def album_list(self) -> List[str]:
         """Returns list of album names."""
         return [album.title for album in self.albums if album.title]
+
+    @property
+    def lyrics(self) -> str:
+        """Returns string that contains lyrics of each tracks of each album."""
+        list_of_album_lyrics = [album.lyrics for album in self.albums]
+        artist_lyrics = " ".join(list_of_album_lyrics)
+        return artist_lyrics
+
+    @property
+    def lyrics_processed(self) -> str:
+        """Returns string that contains processed lyrics of each tracks of each album."""
+        list_of_album_lyrics = [album.lyrics_processed for album in self.albums]
+        artist_lyrics = " ".join(list_of_album_lyrics)
+        return artist_lyrics
 
     @classmethod
     def get_filename(cls, name: str) -> str:
