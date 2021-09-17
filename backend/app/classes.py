@@ -1,5 +1,8 @@
-import os
+import copy
 import json
+import os
+import re
+import string
 from typing import *
 
 import config
@@ -10,6 +13,9 @@ class Track:
     """
     Class representation of single music track.
     """
+
+    # set of non words that occurs in lyrics
+    NON_WORDS = ("urlcopyembedcopy", "embedshare", "\u2026", "\u2019")
 
     def __init__(self, title: str, lyrics: str) -> None:
         """Creates instance of Track class.
@@ -25,9 +31,28 @@ class Track:
         """String representation of this classes instances."""
         return f"Title: {self.title}\nLyrics:{self.lyrics}"
 
-    def to_json(self):
-        """Allows to JSON serialize this class instances."""
-        return json.dumps(self.__dict__)
+    @property
+    def lyrics_processed(self) -> str:
+        """"""
+        # STEP 0 - copies lyrics
+        lyrics = copy.deepcopy(self.lyrics)
+        # STEP I - makes string lowercased
+        lyrics = lyrics.lower()
+        # STEP II - removes unnecessary part of strings
+        # removes everything between brackets
+        lyrics = re.sub("([\(\[]).*?([\)\]])", "\g<1>\g<2>", lyrics)
+        # removes non words parts of string
+        for non_word in self.NON_WORDS:
+            lyrics = lyrics.replace(non_word, "")
+        # removes numbers from stings
+        lyrics = lyrics.translate(str.maketrans("", "", string.punctuation))
+        # STEP III - removes punctuation
+        lyrics = lyrics.translate(str.maketrans("", "", string.digits))
+        # STEP IV - removes whitespaces and new line marks
+        lyrics = lyrics.strip()
+        lyrics = lyrics.replace("\n", " ")
+        lyrics = re.sub(" +", " ", lyrics)
+        return lyrics
 
 
 class Album:
@@ -50,10 +75,6 @@ class Album:
     def __str__(self) -> str:
         """String representation of this classes instances."""
         return f"Title: {self.title}\nTracklist: {self.track_list}"
-
-    def to_json(self):
-        """Allows to JSON serialize this class instances."""
-        return json.dumps(self.__dict__)
 
     @property
     def track_list(self) -> List[str]:
@@ -124,6 +145,11 @@ class Artist:
         """Saves instance of this class to JSON file."""
         with open(self.path, "w") as file:
             json.dump(self.__dict__, file, cls=ArtistEncoder)
+
+    def make_analysis(self) -> dict:
+        """
+        """
+        return {}
 
 
 class ArtistEncoder(json.JSONEncoder):
