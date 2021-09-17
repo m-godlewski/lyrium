@@ -12,6 +12,12 @@ class Track:
     """
 
     def __init__(self, title: str, lyrics: str) -> None:
+        """Creates instance of Track class.
+
+        Args:
+            title (str): track title.
+            lyrics (str): track lyrics.
+        """
         self.title = title
         self.lyrics = lyrics
 
@@ -26,6 +32,13 @@ class Album:
     """
 
     def __init__(self, title: str, cover_url: str, tracks: List[Track]) -> None:
+        """Creates instance of Album class.
+
+        Args:
+            title (str): album title.
+            cover_url (str): URL adress to album cover.
+            tracks (List[Track]): list of Track class objects.
+        """
         self.title = title
         self.cover_url = cover_url
         self.tracks = tracks
