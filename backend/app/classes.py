@@ -21,6 +21,10 @@ class Track:
         self.title = title
         self.lyrics = lyrics
 
+    def __str__(self) -> str:
+        """String representation of this classes instances."""
+        return f"Title: {self.title}\nLyrics:{self.lyrics}"
+
     def to_json(self):
         """Allows to JSON serialize this class instances."""
         return json.dumps(self.__dict__)
@@ -43,9 +47,18 @@ class Album:
         self.cover_url = cover_url
         self.tracks = tracks
 
+    def __str__(self) -> str:
+        """String representation of this classes instances."""
+        return f"Title: {self.title}\nTracklist: {self.track_list}"
+
     def to_json(self):
         """Allows to JSON serialize this class instances."""
         return json.dumps(self.__dict__)
+
+    @property
+    def track_list(self) -> List[str]:
+        """Returns list of tracks names."""
+        return [track.title for track in self.tracks if track.title]
 
 
 class Artist:
@@ -65,6 +78,15 @@ class Artist:
         self.path = os.path.join(config.DATA_DIR, self.get_filename(name=name))
         self.image_url = image_url
         self.albums = albums
+
+    def __str__(self) -> str:
+        """String representation of this classes instances."""
+        return f"Name: {self.name}\nAlbums: {self.album_list}"
+
+    @property
+    def album_list(self) -> List[str]:
+        """Returns list of album names."""
+        return [album.title for album in self.albums if album.title]
 
     @classmethod
     def get_filename(cls, name: str) -> str:
