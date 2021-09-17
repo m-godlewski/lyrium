@@ -5,8 +5,16 @@ import re
 import string
 from typing import *
 
+import nltk
+import pandas as pd
+from textblob import TextBlob
+
 import config
 from app.utills import FilesManager
+
+
+# set of english language stopwords
+STOPWORDS = set(nltk.corpus.stopwords.words("english"))
 
 
 class Track:
@@ -188,8 +196,38 @@ class Artist:
     def make_analysis(self) -> dict:
         """
         """
-        return {}
+        # dictionary that will store method results
+        results = {
+            "sentiment": {},
+            "most_common_words": {},
+            "pos_frequency": {}
+        }
 
+        # copies all lyrics to new variable
+        lyrics = copy.deepcopy(self.lyrics_processed)
+
+        # text sentiment analysis
+        lyrics_blob = TextBlob(lyrics)
+        results["sentiment"]["polarity"] = lyrics_blob.sentiment.polarity
+        results["sentiment"]["subjectivity"] = lyrics_blob.sentiment.subjectivity
+
+        # lyrics tokenization
+        lyrics_tokenized = nltk.word_tokenize(lyrics)
+
+        # stopwords removing
+        lyrics_tokenized = [word for word in lyrics_tokenized if word.casefold() not in STOPWORDS]
+
+        # most common words
+        lyrics_series = pd.Series(lyrics_tokenized)
+        most_common_words = lyrics_series.value_counts().head(10)
+        results["most_common_words"] = most_common_words.to_dict()
+
+        # part of speech (POS) frequency
+        pos_series = pd.Series([word[1] for word in nltk.pos_tag(lyrics_tokenized)])
+        pos_frequency = pos_series.value_counts().head(10)
+        results["pos_frequency"] = pos_frequency.to_dict()
+
+        return results
 
 class ArtistEncoder(json.JSONEncoder):
     """Class that allows JSON encoding of Artist class."""
