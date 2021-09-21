@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import IndexForm from './IndexForm';
+import MainPage from './Main';
 
+
+// Method that renders main page
 function App() {
   return (
     <div className="App">
@@ -15,7 +17,7 @@ function App() {
         >
           Lyrium
         </a>
-        <IndexForm />
+        <MainPage />
       </header>
     </div>
   );
