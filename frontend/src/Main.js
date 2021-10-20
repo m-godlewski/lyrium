@@ -16,29 +16,29 @@ class MainPage extends React.Component {
 	handleChange(event) {
 		this.setState({artistName: event.target.value});
 	}
-
+	
 	// Method that handles event after "Analyse" button was pressed
 	handleSubmit(event) {
 		event.preventDefault();
-		console.log(this.state);
-		const response = fetch("/analyse?artist_name=" + this.state.artistName).then(response => response.json());
-		this.setState({analysisResults: response});
-		console.log(this.state);
+		fetch("/analyse?artist_name=" + this.state.artistName)
+        	.then(response => response.json())
+        	.then(data => this.setState({analysisResults: data.results}));
 		this.setState({analysis: true});
 	}
 
 	// Method that renders form with one input text field and one submit button
 	render() {
 		if (this.state.analysis){
+			console.log(this.state);
 			return (
-				<h1>Hello</h1>
+				<h1>{this.state.artistName}</h1>
 			);
 		}
 		else{
 			return (
 				<form onSubmit={this.handleSubmit}>
 					<label>
-						<input type="text" value={this.state.value} onChange={this.handleChange} />
+						<input type="text" value={this.state.value} onChange={this.handleChange}/>
 					</label>
 					<input type="submit" value="Analyse" />
 				</form>
