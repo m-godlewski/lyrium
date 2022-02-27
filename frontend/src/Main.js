@@ -1,5 +1,31 @@
 import React from 'react';
+import 'chart.js/auto';
+import {Pie} from 'react-chartjs-2';
 
+const state = {
+	labels: ['Test', 'February', 'March',
+			 'April', 'May'],
+	datasets: [
+	  {
+		label: 'Rainfall',
+		backgroundColor: [
+			'#B21F00',
+			'#C9DE00',
+			'#2FDE00',
+			'#00A6B4',
+			'#6800B4'
+		],
+		hoverBackgroundColor: [
+			'#501800',
+			'#4B5000',
+			'#175000',
+			'#003350',
+			'#35014F'
+		],
+		data: [65, 59, 80, 81, 56]
+	  }
+	]
+  }
 
 // Index page form
 class MainPage extends React.Component {
@@ -31,7 +57,25 @@ class MainPage extends React.Component {
 		if (this.state.analysis){
 			console.log(this.state);
 			return (
-				<h1>{this.state.artistName}</h1>
+				<div>
+					<h1>{this.state.artistName}</h1>
+
+					<Pie
+						data={this.state.analysisResults}
+						options={{
+							title:{
+								display:true,
+								text:"Most Common Words",
+								fontSize: 20
+							},
+							legend:{
+								display:true,
+								position:'right'
+							}
+						}}
+					/>
+
+			  </div>
 			);
 		}
 		else{

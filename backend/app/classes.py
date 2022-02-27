@@ -219,15 +219,38 @@ class Artist:
 
         # most common words
         lyrics_series = pd.Series(lyrics_tokenized)
-        most_common_words = lyrics_series.value_counts().head(10)
-        results["most_common_words"] = most_common_words.to_dict()
-
+        most_common_words = lyrics_series.value_counts().head(5)
+        most_common_words = most_common_words.to_dict()
+        results["most_common_words"] = {
+            "labels": most_common_words.keys().tolist(),
+            "datasets": [
+                {
+                    "label": "Rainfall",
+                    "backgroundColor": [
+                        '#B21F00',
+                        '#C9DE00',
+                        '#2FDE00',
+                        '#00A6B4',
+                        '#6800B4'
+                    ],
+                    "hoverBackgroundColor": [
+                        '#501800',
+                        '#4B5000',
+                        '#175000',
+                        '#003350',
+                        '#35014F'
+                    ],
+                    "data": [65, 59, 80, 81, 56]
+                }
+            ]
+        }
         # part of speech (POS) frequency
         pos_series = pd.Series([word[1] for word in nltk.pos_tag(lyrics_tokenized)])
         pos_frequency = pos_series.value_counts().head(10)
         results["pos_frequency"] = pos_frequency.to_dict()
 
-        return results
+        # TODO returns only one analysis results for frontend testing purpose
+        return results.get("most_common_words")
 
 class ArtistEncoder(json.JSONEncoder):
     """Class that allows JSON encoding of Artist class."""
