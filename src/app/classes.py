@@ -222,27 +222,8 @@ class Artist:
         most_common_words = lyrics_series.value_counts().head(5)
         most_common_words = most_common_words.to_dict()
         results["most_common_words"] = {
-            "labels": most_common_words.keys().tolist(),
-            "datasets": [
-                {
-                    "label": "Rainfall",
-                    "backgroundColor": [
-                        '#B21F00',
-                        '#C9DE00',
-                        '#2FDE00',
-                        '#00A6B4',
-                        '#6800B4'
-                    ],
-                    "hoverBackgroundColor": [
-                        '#501800',
-                        '#4B5000',
-                        '#175000',
-                        '#003350',
-                        '#35014F'
-                    ],
-                    "data": [65, 59, 80, 81, 56]
-                }
-            ]
+            "words": list(most_common_words.keys()),
+            "amount": list(most_common_words.values())
         }
         # part of speech (POS) frequency
         pos_series = pd.Series([word[1] for word in nltk.pos_tag(lyrics_tokenized)])
