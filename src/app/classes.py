@@ -199,7 +199,7 @@ class Artist:
         # dictionary that will store method results
         results = {
             "sentiment": {},
-            "most_common_words": {},
+            "mcw": {},
             "pos_frequency": {}
         }
 
@@ -221,17 +221,17 @@ class Artist:
         lyrics_series = pd.Series(lyrics_tokenized)
         most_common_words = lyrics_series.value_counts().head(5)
         most_common_words = most_common_words.to_dict()
-        results["most_common_words"] = {
+        results["mcw"] = {
             "words": list(most_common_words.keys()),
             "amount": list(most_common_words.values())
         }
+
         # part of speech (POS) frequency
         pos_series = pd.Series([word[1] for word in nltk.pos_tag(lyrics_tokenized)])
         pos_frequency = pos_series.value_counts().head(10)
         results["pos_frequency"] = pos_frequency.to_dict()
 
-        # TODO returns only one analysis results for frontend testing purpose
-        return results.get("most_common_words")
+        return results
 
 class ArtistEncoder(json.JSONEncoder):
     """Class that allows JSON encoding of Artist class."""
