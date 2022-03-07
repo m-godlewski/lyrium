@@ -28,6 +28,14 @@
         height: 100%;
         margin: 0;
       }
+      .page-content {
+        min-height: 100%;
+        height:auto !important; /* cross-browser */
+        height: 100%; /* cross-browser */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
 
     <!-- Title -->
@@ -38,7 +46,7 @@
   <BODY>
 
     <!-- Page content -->
-    <div class="container-fluid">
+    <div class="container-fluid page-content">
 
       {% block content %}
       {% endblock %}
