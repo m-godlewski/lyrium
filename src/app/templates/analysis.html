@@ -5,37 +5,45 @@
     <!-- charts container -->
     <div class="chart-container" style="position: relative; height:20vh; width:40vw">
         <canvas id="mcwChart"></canvas>
+        <canvas id="posChart"></canvas>
+        <canvas id="sentimentChart"></canvas>
     </div>
 
+    <!-- most common words visualisation -->
     <script>
-
+   
+        // processed data object
         var mcwData = {
-            labels: {{ data.analysis.mcw.words | safe }},
-            datasets: [{
-                label: "Most Common Words",
-                data: {{ data.analysis.mcw.amount | safe }},
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                ],
-                borderWidth: 1
-            }]
+            labels: {{ data.analysis.mcw.x | safe }},
+            datasets: [
+                {
+                    label: "Most Common Words",
+                    data: {{ data.analysis.mcw.y | safe }},
+                    backgroundColor: [
+                        "rgba(255, 99, 132, 0.2)",
+                        "rgba(54, 162, 235, 0.2)",
+                        "rgba(255, 206, 86, 0.2)",
+                        "rgba(75, 192, 192, 0.2)",
+                        "rgba(153, 102, 255, 0.2)",
+                    ],
+                    borderColor: [
+                        "rgba(255, 99, 132, 1)",
+                        "rgba(54, 162, 235, 1)",
+                        "rgba(255, 206, 86, 1)",
+                        "rgba(75, 192, 192, 1)",
+                        "rgba(153, 102, 255, 1) ",
+                    ],
+                    borderWidth: 1
+                }
+            ]
         }
 
-        const ctx = document.getElementById("mcwChart").getContext("2d");
+        // context object
+        const ctx_mcw = document.getElementById("mcwChart").getContext("2d");
 
-        const mcwChart = new Chart(ctx, {
-            type: 'bar',
+        // chart object
+        const mcwChart = new Chart(ctx_mcw, {
+            type: "bar",
             data: mcwData,
             options: {
                 scales: {
@@ -43,6 +51,90 @@
                         beginAtZero: true
                     }
                 }
+            }
+        });
+
+    </script>
+
+    <!-- part of speech frequency visualisation -->
+    <script>
+
+        // processed data object
+        var posData = {
+            labels: {{ data.analysis.pos.x | safe }},
+            datasets: [
+                {
+                    label: "Part Of Speech Frequency",
+                    data: {{ data.analysis.pos.y | safe }},
+                    backgroundColor: [
+                        "rgba(255, 99, 132, 0.2)",
+                        "rgba(54, 162, 235, 0.2)",
+                        "rgba(255, 206, 86, 0.2)",
+                        "rgba(75, 192, 192, 0.2)",
+                        "rgba(153, 102, 255, 0.2)",
+                    ],
+                    borderColor: [
+                        "rgba(255, 99, 132, 1)",
+                        "rgba(54, 162, 235, 1)",
+                        "rgba(255, 206, 86, 1)",
+                        "rgba(75, 192, 192, 1)",
+                        "rgba(153, 102, 255, 1) ",
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        }
+
+        // context object
+        const ctx_pos = document.getElementById("posChart").getContext("2d");
+
+        // chart object
+        const posChart = new Chart(ctx_pos, {
+            type: "pie",
+            data: posData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    </script>
+
+    <!-- sentiment analysis visualisation -->
+    <script>
+
+        // processed data object
+        var sentimentData = {
+            labels: {{ data.analysis.sentiment.x | safe }},
+            datasets: [
+                {
+                    label: "Text Sentiment Analysis",
+                    data: {{ data.analysis.sentiment.y | safe }},
+                    backgroundColor: [
+                        "rgba(255, 99, 132, 0.2)",
+                        "rgba(54, 162, 235, 0.2)",
+                    ],
+                    borderColor: [
+                        "rgba(255, 99, 132, 1)",
+                        "rgba(54, 162, 235, 1)",
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        }
+
+        // context object
+        const ctx_sentiment = document.getElementById("sentimentChart").getContext("2d");
+
+        // chart object
+        const sentimentChart = new Chart(ctx_sentiment, {
+            type: "bar",
+            data: sentimentData,
+            options: {
+                indexAxis: "y"
             }
         });
 

@@ -194,44 +194,56 @@ class Artist:
             json.dump(self.__dict__, file, cls=ArtistEncoder)
 
     def make_analysis(self) -> dict:
-        """
-        """
-        # dictionary that will store method results
+        """Performs full analysis of all artist's lyrics."""
+
+        # dictionary that will store analysis results
         results = {
-            "sentiment": {},
             "mcw": {},
-            "pos_frequency": {}
+            "pos": {},
+            "sentiment": {}
         }
 
         # copies all lyrics to new variable
         lyrics = copy.deepcopy(self.lyrics_processed)
 
-        # text sentiment analysis
-        lyrics_blob = TextBlob(lyrics)
-        results["sentiment"]["polarity"] = lyrics_blob.sentiment.polarity
-        results["sentiment"]["subjectivity"] = lyrics_blob.sentiment.subjectivity
-
         # lyrics tokenization
         lyrics_tokenized = nltk.word_tokenize(lyrics)
 
-        # stopwords removing
+        # removing stopwords
         lyrics_tokenized = [word for word in lyrics_tokenized if word.casefold() not in STOPWORDS]
 
-        # most common words
+        # MOST COMMON WORDS
+        # creation of pandas series object from lyrics list
         lyrics_series = pd.Series(lyrics_tokenized)
-        most_common_words = lyrics_series.value_counts().head(5)
-        most_common_words = most_common_words.to_dict()
-        results["mcw"] = {
-            "words": list(most_common_words.keys()),
-            "amount": list(most_common_words.values())
-        }
+        # getting five most frequent ocurred words in lyrics
+        most_common_words = lyrics_series.value_counts().head(5).to_dict()
+        # assigning list of words and their amounts to results dictionary
+        results["mcw"]["x"] = list(most_common_words.keys())
+        results["mcw"]["y"] = list(most_common_words.values())
 
-        # part of speech (POS) frequency
+        # PART OF SPEECH FREQUENCY
+        # creation of pandas series object that contain part of speech tags
         pos_series = pd.Series([word[1] for word in nltk.pos_tag(lyrics_tokenized)])
-        pos_frequency = pos_series.value_counts().head(10)
-        results["pos_frequency"] = pos_frequency.to_dict()
+        # getting five most frequent ocurred parts of speech in lyrics
+        pos_frequency = pos_series.value_counts().head(10).to_dict()
+        # assigning list of parts of speech and their frequences to results dictionary
+        results["pos"]["x"] = list(pos_frequency.keys())
+        results["pos"]["y"] = list(pos_frequency.values())
+
+        # TEXT SENTIMENT ANALYSIS
+        # creation of TextBlob object base on lyrics
+        lyrics_blob = TextBlob(lyrics)
+        # text sentiment analysis
+        text_sentiment = {
+            "polarity": lyrics_blob.sentiment.polarity,
+            "subjectivity": lyrics_blob.sentiment.subjectivity
+        }
+        # assigning sentiment types and their values to results dictionary
+        results["sentiment"]["x"] = list(text_sentiment.keys())
+        results["sentiment"]["y"] = list(text_sentiment.values())
 
         return results
+
 
 class ArtistEncoder(json.JSONEncoder):
     """Class that allows JSON encoding of Artist class."""
