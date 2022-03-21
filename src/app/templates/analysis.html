@@ -48,7 +48,15 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
@@ -95,7 +103,17 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        display: false,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        display: false,
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
@@ -134,7 +152,21 @@
             type: "bar",
             data: sentimentData,
             options: {
-                indexAxis: "y"
+                indexAxis: "y",
+                scales: {
+                    x: {
+                        min: -1,
+                        max: 1,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
             }
         });
 
