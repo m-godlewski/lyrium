@@ -22,3 +22,6 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 LOGGING = {
     "CONFIG_FILE": os.path.join(BASE_DIR, ".logs", "logging.conf")
 }
+
+# "on-demand" application mode switch
+ON_DEMAND_MODE = False

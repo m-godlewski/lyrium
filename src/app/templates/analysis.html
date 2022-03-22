@@ -2,15 +2,36 @@
 
 {% block content %}
 
-    <!-- charts container -->
+    <!-- main container -->
     <div style="position: relative; height:20vh; width:40vw">
+        <!-- artist information container -->
+        <div class="pb-5">
+            <!-- artist name -->
+            <h1>{{data.artist_name}}</h1>
+            <!-- artist biography -->
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type
+                specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop publishing software
+                like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+            <!-- artist image -->
+            <img src="{{data.artist_image_url}}" class="img-fluid">
+        </div>
+        <!-- charts containers -->
         <div class="pb-5 pt-5">
+            <center><h2>Most Common Words</h2></center>
             <canvas id="mcwChart"></canvas>
         </div>
         <div class="pb-5 pt-5">
+            <center><h2>Part Of Speech Frequency</h2></center>
             <canvas id="posChart"></canvas>
         </div>
         <div class="pb-5 pt-5">
+            <center><h2>Lyrics Sentiment</h2></center>
             <canvas id="sentimentChart" class="row"></canvas>
         </div>
     </div>

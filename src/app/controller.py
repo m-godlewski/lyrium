@@ -18,6 +18,7 @@ def lyrics_analyse_artist(artist_name: str) -> dict:
         # makes analysis of selected artist lyrics
         results = {
             "artist_name": artist.name,
+            "artist_image_url": artist.image_url,
             "analysis": artist.make_analysis()
         }
 
