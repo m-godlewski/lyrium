@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+    font-family: 'Quicksand', sans-serif;
+}
+.page-content-home {
+    min-height: 100%;
+    height:auto !important; /* cross-browser */
+    height: 100%; /* cross-browser */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-content-analysis {
+    min-height: 100%;
+    height:auto !important; /* cross-browser */
+    height: 100%; /* cross-browser */
+    display: flex;
+    justify-content: center;
+}

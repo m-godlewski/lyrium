@@ -2,21 +2,32 @@
 
 {% block content %}
 
-    <!-- main analysis form -->
-    <div>
+    <!-- page content -->
+    <div class="container-fluid page-content-home">
 
-        <!-- application logo -->
-        <img src="/static/lyrium_logo_text.png" class="img-fluid" alt="lyrium text logo">
+        <!-- main analysis form -->
+        <div class="w-50">
 
-        <form action="/analysis" method="POST">
+            <center>
 
-            <!-- artist name text field -->
-            <input name="artist_name" type="text" placeholder="" class="form-control">
+                <!-- application logo -->
+                <img src="/static/lyrium_logo_text.png" class="img-fluid pb-5" alt="lyrium text logo">
 
-            <!-- submit button -->
-            <button type="submit" formmethod="post" class="btn btn-primary text-white form-control">Analyse</button>
+                <form action="/analysis" method="POST">
 
-        </form>
+                    <!-- artist name text field -->
+                    <div class="form-group w-50">
+                        <input name="artist_name" type="text" placeholder="Band/Artist name" class="form-control text-center">
+                    </div>
+
+                    <!-- submit button -->
+                    <button type="submit" formmethod="post" class="btn btn-primary text-white font-weight-bold w-25">Analyse Lyrics</button>
+
+                </form>
+
+            </center>
+
+        </div>
 
     </div>
 

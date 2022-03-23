@@ -23,26 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 
     <!-- CSS styles -->
-    <style>
-      html, body {
-        height: 100%;
-        font-family: 'Quicksand', sans-serif;
-      }
-      .wrapper {
-        min-height: 80%;
-        height: auto !important;
-        height: 100%;
-        margin: 0;
-      }
-      .page-content {
-        min-height: 100%;
-        height:auto !important; /* cross-browser */
-        height: 100%; /* cross-browser */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    </style>
+    <link rel="stylesheet" href="../static/style.css">
 
     <!-- Title -->
     <title>Lyrium</title>
@@ -54,13 +35,9 @@
 
   <BODY>
 
-    <!-- Page content -->
-    <div class="container-fluid page-content">
-
-      {% block content %}
-      {% endblock %}
-
-    </div>
+    <!-- Page Content -->
+    {% block content %}
+    {% endblock %}
 
   </BODY>
 
