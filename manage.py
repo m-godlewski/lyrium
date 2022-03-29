@@ -13,4 +13,4 @@ manager = Manager(APP)
 
 # main server loop
 if __name__ == "__main__":
-    manager.run()
+    manager.run(host="0.0.0.0")
