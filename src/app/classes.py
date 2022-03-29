@@ -10,7 +10,7 @@ import pandas as pd
 from textblob import TextBlob
 
 import config
-from app.utills import FilesManager
+from app.utills import FilesManager, POSMapper
 
 
 # set of english language stopwords
@@ -223,12 +223,15 @@ class Artist:
 
         # PART OF SPEECH FREQUENCY
         # creation of pandas series object that contain part of speech tags
-        pos_series = pd.Series([word[1] for word in nltk.pos_tag(lyrics_tokenized)])
+        pos_series = pd.Series([word[1] for word in nltk.pos_tag(lyrics_tokenized, tagset="universal")])
         # getting five most frequent ocurred parts of speech in lyrics
         pos_frequency = pos_series.value_counts().head(10).to_dict()
         # assigning list of parts of speech and their frequences to results dictionary
         results["pos"]["x"] = list(pos_frequency.keys())
         results["pos"]["y"] = list(pos_frequency.values())
+        results["pos"]["n"] = len(results["pos"]["y"])
+        # maps pos tags to their longer names
+        results["pos"]["x"] = [POSMapper.map_pos_(tag=tag) for tag in results["pos"]["x"]]
 
         # TEXT SENTIMENT ANALYSIS
         # creation of TextBlob object base on lyrics

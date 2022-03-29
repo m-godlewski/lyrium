@@ -15,3 +15,25 @@ class FilesManager:
         """Saves given dictionary as JSON file at given 'path'."""
         with open(path, "w") as f:
             json.dump(data, f)
+
+
+class POSMapper:
+    """Class that is representation of POS tags mapper."""
+
+    @staticmethod
+    def map_pos_(tag: str) -> str:
+        """Returns longer name of given POS tag."""
+        pos_tag_map = {
+            "ADJ": "ADJECTIVE",
+            "ADP": "ADPOSITION",
+            "ADV": "ADVERB",
+            "CONJ": "CONJUNCTION",
+            "DET": "DETERMINER",
+            "NOUN": "NOUN",
+            "NUM": "NUMERAL",
+            "PRT": "PARTICLE",
+            "PRON": "PRONOUN",
+            "VERB": "VERB", 
+            "X": "OTHER"
+        }
+        return pos_tag_map.get(tag, "NONE")

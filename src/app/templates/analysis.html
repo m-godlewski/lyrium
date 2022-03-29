@@ -12,10 +12,10 @@
             <div class="pb-5 pt-5" style="width: 100vh; height: 100vh;">
 
                 <!-- artist name -->
-                <h1>{{data.artist_name}}</h1>
+                <center><h1 style="font-size: 18vh;" class="pb-5">{{data.artist_name}}</h1></center>
 
                 <!-- artist image -->
-                <img class src="{{data.artist_image_url}}" class="img-responsive", style="max-width: 50%; max-height: 50%;">
+                <center><img class src="{{data.artist_image_url}}" class="img-fluid", style="max-width: 50%; max-height: 50%;"></center>
 
             </div>
 
@@ -27,8 +27,12 @@
 
             <!-- part of speech frequency chart -->
             <div class="pb-5 pt-5" style="width: 100vh; height: 100vh;">
-                <center><h2>Part Of Speech Frequency</h2></center>
-                <canvas id="posChart"></canvas>
+                <center>
+                    <h2>Part Of Speech Frequency</h2>
+                    <div class="pt-5" style="width: 60vh;">
+                        <canvas id="posChart" width="76" height="76"></canvas>
+                    </div>
+                </center>
             </div>
 
             <!-- sentiment analysis chart -->
@@ -78,6 +82,7 @@
             type: "bar",
             data: mcwData,
             options: {
+                events: [],
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -104,6 +109,23 @@
     <!-- part of speech frequency visualisation -->
     <script>
 
+        // method that randomize rgba color code
+        function dynamicColors() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgba(" + r + "," + g + "," + b + ", 0.5)";
+        }
+
+        // method that generates list of 'n' colors codes
+        function poolColors(n) {
+            var pool = [];
+            for(i = 0; i < n; i++) {
+                pool.push(dynamicColors());
+            }
+            return pool;
+        }
+
         // processed data object
         var posData = {
             labels: {{ data.analysis.pos.x | safe }},
@@ -111,20 +133,8 @@
                 {
                     label: "Part Of Speech Frequency",
                     data: {{ data.analysis.pos.y | safe }},
-                    backgroundColor: [
-                        "rgba(255, 99, 132, 0.2)",
-                        "rgba(54, 162, 235, 0.2)",
-                        "rgba(255, 206, 86, 0.2)",
-                        "rgba(75, 192, 192, 0.2)",
-                        "rgba(153, 102, 255, 0.2)",
-                    ],
-                    borderColor: [
-                        "rgba(255, 99, 132, 1)",
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(255, 206, 86, 1)",
-                        "rgba(75, 192, 192, 1)",
-                        "rgba(153, 102, 255, 1) ",
-                    ],
+                    backgroundColor: poolColors({{data.analysis.pos.n}}),
+                    borderColor: poolColors({{data.analysis.pos.n}}),
                     borderWidth: 1
                 }
             ]
@@ -194,6 +204,7 @@
             type: "bar",
             data: sentimentData,
             options: {
+                events: [],
                 indexAxis: "y",
                 scales: {
                     x: {
