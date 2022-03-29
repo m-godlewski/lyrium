@@ -1,1 +1,1 @@
-worker: python manage.py runserver --host 0.0.0.0 --port 5000
+web: python manage.py runserver --host 0.0.0.0 --port 5000
