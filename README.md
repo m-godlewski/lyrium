@@ -1,2 +1,2 @@
-# lyrium
-Artists lyrics analysis application
+# Lyrium
+## Version 1.0
