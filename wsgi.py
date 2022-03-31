@@ -1,7 +1,7 @@
 from app import APP as application
 
 
-# application instance object
+# application instance
 app = application
 
 

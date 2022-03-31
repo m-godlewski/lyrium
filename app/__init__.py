@@ -25,6 +25,7 @@ flask_cors.CORS(APP)
 
 # Downloading NLTK resources
 nltk.download("stopwords")
+nltk.download("punkt")
 nltk.download("universal_tagset")
 
 
