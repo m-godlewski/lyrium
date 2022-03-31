@@ -3,6 +3,11 @@
 ## About
 Lyrium is web application that making analysis of specific music artist lyrics.
 
+## Features
+* Most common words analysis
+* Part of speech frequency
+* Lyrics sentiment analysis
+
 ## Technologies
 This project was created using:
 * Python version: 3.7.13
