@@ -1,4 +1,4 @@
-# Lyrium [![version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://semver.org)
+# Lyrium [![version](https://img.shields.io/badge/version-0.1.0-green.svg)](https://semver.org)
 
 ## About
 Lyrium is web application that making analysis of specific music artist lyrics.
