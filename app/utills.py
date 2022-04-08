@@ -1,4 +1,5 @@
 import json
+import os
 
 
 class FilesManager:
@@ -7,8 +8,11 @@ class FilesManager:
     @staticmethod
     def load_json(path: str) -> dict:
         """Loads JSON file from given 'path', and returns file content as dictionary."""
-        with open(path, "r") as f:
-            return json.load(f)
+        if os.path.isfile(path):
+            with open(path, "r") as f:
+                return json.load(f)
+        else:
+            return {}
 
     @staticmethod
     def save_json(path: str, data: dict):
@@ -36,4 +40,4 @@ class POSMapper:
             "VERB": "VERB", 
             "X": "OTHER"
         }
-        return pos_tag_map.get(tag, "NONE")
+        return pos_tag_map.get(tag, "UNDEFINED")

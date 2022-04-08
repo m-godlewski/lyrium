@@ -25,6 +25,10 @@ def analysis():
     artist_name = request.form["artist_name"]
 
     # calls method that makes artist lyrics analyse
-    analysis_results = controller.lyrics_analyse_artist(artist_name=artist_name)
+    analysis_results = controller.lyrics_analyse_artist(name=artist_name)
 
-    return render_template("analysis.html", data=analysis_results)
+    # ensures if artists exists in database
+    if analysis_results.get("artist_exists", False):
+        return render_template("analysis.html", data=analysis_results)
+    else:
+        return render_template("artist_not_found.html", data={"artist_name": artist_name})

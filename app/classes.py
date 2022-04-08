@@ -169,6 +169,9 @@ class Artist:
         artist_file_path = os.path.join(config.DATA_DIR, cls.get_filename(name=name))
         # loads artist JSON file content
         json_content = FilesManager.load_json(path=artist_file_path)
+        # if there is no artist data
+        if not json_content:
+            return None
         # dictionary that stores creation parameters
         parameters = {
             "name": json_content.get("name"),
