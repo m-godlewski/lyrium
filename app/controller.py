@@ -2,10 +2,11 @@
 Script that contains methods responsible for business logic of application.
 """
 
+
 import logging
 import traceback
 
-from app.classes import Track, Album, Artist
+from app.classes import Artist
 
 
 def lyrics_analyse_artist(name: str) -> dict:

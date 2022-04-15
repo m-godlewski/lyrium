@@ -18,9 +18,7 @@ STOPWORDS = set(nltk.corpus.stopwords.words("english"))
 
 
 class Track:
-    """
-    Class representation of single music track.
-    """
+    """Class representation of single music track."""
 
     # set of non words that occurs in lyrics
     NON_WORDS = ("urlcopyembedcopy", "embedshare", "\u2026", "\u2019")

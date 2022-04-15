@@ -11,6 +11,7 @@ from app import APP
 # application command manager
 manager = Manager(APP)
 
+
 # main server loop
 if __name__ == "__main__":
     manager.run()

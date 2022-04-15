@@ -1,3 +1,8 @@
+"""
+This script allows to run flask server using gunicorn.
+"""
+
+
 from app import APP as application
 
 
