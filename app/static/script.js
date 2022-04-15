@@ -4,11 +4,6 @@ let names = [
     "Trivium"
 ];
 
-// fetch('artists.json')
-//   .then(response => response.json())
-//   .then(data => console.log(data))
-//   .catch(error => console.log(error));
-
 //Sort names in ascending order
 let sortedNames = names.sort();
 

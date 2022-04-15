@@ -23,7 +23,7 @@ def lyrics_analyse_artist(name: str) -> dict:
                 "artist_exists": True,
                 "artist_name": artist.name,
                 "artist_image_url": artist.image_url,
-                "analysis": artist.make_analysis(),
+                "analysis": artist.lyrics_analysed,
             }
         else:
             results = {

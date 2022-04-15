@@ -1,27 +1,14 @@
-import copy
 import json
 import os
-import re
-import string
 from typing import *
 
-import nltk
-import pandas as pd
-from textblob import TextBlob
-
 import config
-from app.utills import FilesManager, POSMapper
-
-
-# set of english language stopwords
-STOPWORDS = set(nltk.corpus.stopwords.words("english"))
+from app.utills import FilesManager
+from app.nlp import NLP
 
 
 class Track:
     """Class representation of single music track."""
-
-    # set of non words that occurs in lyrics
-    NON_WORDS = ("urlcopyembedcopy", "embedshare", "\u2026", "\u2019")
 
     def __init__(self, title: str, lyrics: str) -> None:
         """Creates instance of Track class.
@@ -39,43 +26,12 @@ class Track:
 
     @property
     def lyrics_processed(self) -> str:
-        """Returns processed track lyrics.
-
-        String is processed in four following steps.
-
-        - STEP I - lowercasing.
-        - STEP II - removing unnecessary part of string.
-        - STEP III - removing punctuation.
-        - STEP IV - removing whitespaces.
-
-        Returns:
-            str: Processed lyrics string.
-        """
-        # STEP 0 - copies lyrics
-        lyrics = copy.deepcopy(self.lyrics)
-        # STEP I - makes string lowercased
-        lyrics = lyrics.lower()
-        # STEP II - removes unnecessary part of strings
-        # removes everything between brackets
-        lyrics = re.sub("([\(\[]).*?([\)\]])", "\g<1>\g<2>", lyrics)
-        # removes non words parts of string
-        for non_word in self.NON_WORDS:
-            lyrics = lyrics.replace(non_word, "")
-        # removes numbers from stings
-        lyrics = lyrics.translate(str.maketrans("", "", string.punctuation))
-        # STEP III - removes punctuation
-        lyrics = lyrics.translate(str.maketrans("", "", string.digits))
-        # STEP IV - removes whitespaces and new line marks
-        lyrics = lyrics.strip()
-        lyrics = lyrics.replace("\n", " ")
-        lyrics = re.sub(" +", " ", lyrics)
-        return lyrics
+        """Using NLP class to process track lyrics."""
+        return NLP.text_process(text=self.lyrics)
 
 
 class Album:
-    """
-    Class representation of single music album.
-    """
+    """Class representation of single music album."""
 
     def __init__(self, title: str, cover_url: str, tracks: List[Track]) -> None:
         """Creates instance of Album class.
@@ -114,9 +70,7 @@ class Album:
 
 
 class Artist:
-    """
-    Class representation of single music artist.
-    """
+    """Class representation of single music artist."""
 
     def __init__(self, name: str, image_url: str, albums: List[Album]) -> None:
         """Creates instance of Artist class.
@@ -127,9 +81,10 @@ class Artist:
             albums (List[Album]): list of Album class objects.
         """
         self.name = name
-        self.path = os.path.join(config.DATA_DIR, self.get_filename(name=name))
         self.image_url = image_url
         self.albums = albums
+        # path to artist JSON file
+        self.path = os.path.join(config.DATA_DIR, self.get_filename(name=name))
 
     def __str__(self) -> str:
         """String representation of this classes instances."""
@@ -154,6 +109,11 @@ class Artist:
         artist_lyrics = " ".join(list_of_album_lyrics)
         return artist_lyrics
 
+    @property
+    def lyrics_analysed(self) -> dict:
+        """Performs full analysis of all artist's lyrics."""
+        return NLP.text_analyse(text=self.lyrics_processed)
+
     @classmethod
     def get_filename(cls, name: str) -> str:
         """Returns JSON file name of selected artist."""
@@ -161,7 +121,7 @@ class Artist:
         return f"{name}.json"
 
     @classmethod
-    def load(cls, name: str):
+    def load(cls, name: str) -> object:
         """Creates instance of this class, base on JSON file content."""
         # path to artist JSON file
         artist_file_path = os.path.join(config.DATA_DIR, cls.get_filename(name=name))
@@ -193,60 +153,6 @@ class Artist:
         """Saves instance of this class to JSON file."""
         with open(self.path, "w") as file:
             json.dump(self.__dict__, file, cls=ArtistEncoder)
-
-    def make_analysis(self) -> dict:
-        """Performs full analysis of all artist's lyrics."""
-
-        # dictionary that will store analysis results
-        results = {
-            "mcw": {},
-            "pos": {},
-            "sentiment": {}
-        }
-
-        # copies all lyrics to new variable
-        lyrics = copy.deepcopy(self.lyrics_processed)
-
-        # lyrics tokenization
-        lyrics_tokenized = nltk.word_tokenize(lyrics)
-
-        # removing stopwords
-        lyrics_tokenized = [word for word in lyrics_tokenized if word.casefold() not in STOPWORDS]
-
-        # MOST COMMON WORDS
-        # creation of pandas series object from lyrics list
-        lyrics_series = pd.Series(lyrics_tokenized)
-        # getting five most frequent ocurred words in lyrics
-        most_common_words = lyrics_series.value_counts().head(5).to_dict()
-        # assigning list of words and their amounts to results dictionary
-        results["mcw"]["x"] = list(most_common_words.keys())
-        results["mcw"]["y"] = list(most_common_words.values())
-
-        # PART OF SPEECH FREQUENCY
-        # creation of pandas series object that contain part of speech tags
-        pos_series = pd.Series([word[1] for word in nltk.pos_tag(lyrics_tokenized, tagset="universal")])
-        # getting five most frequent ocurred parts of speech in lyrics
-        pos_frequency = pos_series.value_counts().head(10).to_dict()
-        # assigning list of parts of speech and their frequences to results dictionary
-        results["pos"]["x"] = list(pos_frequency.keys())
-        results["pos"]["y"] = list(pos_frequency.values())
-        results["pos"]["n"] = len(results["pos"]["y"])
-        # maps pos tags to their longer names
-        results["pos"]["x"] = [POSMapper.map_pos_(tag=tag) for tag in results["pos"]["x"]]
-
-        # TEXT SENTIMENT ANALYSIS
-        # creation of TextBlob object base on lyrics
-        lyrics_blob = TextBlob(lyrics)
-        # text sentiment analysis
-        text_sentiment = {
-            "polarity": lyrics_blob.sentiment.polarity,
-            "subjectivity": lyrics_blob.sentiment.subjectivity
-        }
-        # assigning sentiment types and their values to results dictionary
-        results["sentiment"]["x"] = list(text_sentiment.keys())
-        results["sentiment"]["y"] = list(text_sentiment.values())
-
-        return results
 
 
 class ArtistEncoder(json.JSONEncoder):
