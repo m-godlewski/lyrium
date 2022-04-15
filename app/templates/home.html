@@ -13,12 +13,15 @@
                 <!-- application logo -->
                 <img src="/static/lyrium_logo_text.png" class="img-fluid pb-5" alt="lyrium text logo">
 
-                <form action="/analysis" method="POST">
+                <form action="/analysis" method="POST" autocomplete="off">
 
                     <!-- artist name text field -->
                     <div class="form-group w-50">
-                        <input name="artist_name" type="text" placeholder="Band/Artist name" class="form-control text-center">
+                        <input name="artist_name" type="text" id="input" placeholder="Band/Artist name" class="form-control text-center">
                     </div>
+                    <ul class="list"></ul>
+
+                    <script src="../static/script.js"></script>
 
                     <!-- submit button -->
                     <button type="submit" formmethod="post" class="btn btn-primary text-white font-weight-bold w-25">Analyse Lyrics</button>
