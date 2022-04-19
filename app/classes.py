@@ -1,3 +1,8 @@
+"""
+This script contains classes definition of objects used in whole application.
+"""
+
+
 import json
 import os
 from typing import *

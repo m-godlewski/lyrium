@@ -1,3 +1,8 @@
+"""
+This script provides the interface to app module.
+"""
+
+
 import flask
 import flask_restful
 import flask_cors

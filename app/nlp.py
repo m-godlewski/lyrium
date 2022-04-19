@@ -1,3 +1,8 @@
+"""
+Script that contains classes responsible for NLP.
+"""
+
+
 import copy
 import re
 import string
