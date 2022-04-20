@@ -1,0 +1,4 @@
+stopwords
+punkt
+universal_tagset
+averaged_perceptron_tagger
