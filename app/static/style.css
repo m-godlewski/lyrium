@@ -21,6 +21,7 @@ html, body {
     justify-content: center;
 }
 .pillar{
+    background-color: white;
 }
 .brick{
     width: 100vh;
