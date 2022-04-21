@@ -1,7 +1,10 @@
+/*  */
 html, body {
     height: 100%;
     font-family: 'Quicksand', sans-serif;
 }
+
+/*  */
 .page-content-home {
     min-height: 100%;
     height:auto !important; /* cross-browser */
@@ -17,6 +20,25 @@ html, body {
     display: flex;
     justify-content: center;
 }
+.pillar{
+}
+.brick{
+    width: 100vh;
+    height: 100vh;
+    padding-top: 10%;
+}
+.artist-name{
+    font-size: 18vh;
+    padding-bottom: 10%;
+}
+.artist-image{
+    max-width: 50%; 
+    max-height: 50%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/*  */
 input[type="text"] {
     width: 100%;
     padding: 15px 10px;

@@ -6,29 +6,29 @@
     <div class="container-fluid page-content-analysis">
 
         <!-- main section -->
-        <div>
+        <div class="pillar">
 
             <!-- artist information container -->
-            <div class="pb-5 pt-5" style="width: 100vh; height: 100vh;">
+            <div class="brick">
 
                 <!-- artist name -->
-                <center><h1 style="font-size: 18vh;" class="pb-5">{{data.artist_name}}</h1></center>
+                <center><h1 class="artist-name">{{data.artist_name}}</h1></center>
 
                 <!-- artist image -->
-                <center><img class src="{{data.artist_image_url}}" class="img-fluid", style="max-width: 50%; max-height: 50%;"></center>
+                <center><img src="{{data.artist_image_url}}" class="artist-image img-fluid"></center>
 
             </div>
 
             <!-- most common words chart -->
-            <div class="pb-5 pt-5" style="width: 100vh; height: 100vh;">
+            <div class="brick">
                 <center><h2><b>Most Common Words</b></h2></center>
                 <canvas id="mcwChart"></canvas>
             </div>
 
             <!-- part of speech frequency chart -->
-            <div class="pb-5 pt-5" style="width: 100vh; height: 100vh;">
+            <div class="brick">
                 <center>
-                    <h2><b>Part Of Speech Frequency</h2></b>
+                    <h2><b>Part Of Speech Frequency</b></h2>
                     <div class="pt-5" style="width: 60vh;">
                         <canvas id="posChart" width="76" height="76"></canvas>
                     </div>
@@ -36,7 +36,7 @@
             </div>
 
             <!-- sentiment analysis chart -->
-            <div class="pb-5 pt-5" style="width: 100vh; height: 100vh;">
+            <div class="brick">
                 <center><h2><b>Lyrics Sentiment</b></h2></center>
                 <canvas id="sentimentChart" class="row"></canvas>
             </div>

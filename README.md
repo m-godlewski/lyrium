@@ -12,4 +12,6 @@ Lyrium is web application that making analysis of specific music artist lyrics.
 This project was created using:
 * Python version: 3.7.13
 * Flask version: 1.1.0
+* Bootstrap version: 4.3.1
+* Chart.js version: 3.7.1
 * Other dependencies listed in *requirements.txt* file
